@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bloomberg.Api.Emulator", "Bloomberg.Api.Emulator\Bloomberg.Api.Emulator.csproj", "{85F33C13-C27D-4D43-B6B7-62C224882845}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloombergTrader.Client", "BloombergTrader.Client\BloombergTrader.Client.csproj", "{FC722577-A66B-419D-BBBB-1CEA4AB52103}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloombergTrader.Client.GUI", "BloombergTrader.Client.GUI\BloombergTrader.Client.GUI.csproj", "{D4E4E618-FABD-4D1D-A864-3BD9BFDD5156}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{87C466BC-49A3-4CDC-9420-6B109A76DB7F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{BC5F87E9-E1FD-4B40-A17E-FF9C944B8C55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloombergTrader.DataTransferObjects", "BloombergTrader.DataTransferObjects\BloombergTrader.DataTransferObjects.csproj", "{393906F3-B3E1-49DB-AF73-65B64C2D5995}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BloombergTrader.Client.Tests", "BloombergTrader.Client.Tests\BloombergTrader.Client.Tests.csproj", "{5D2F1946-FED3-41C0-96FC-C72E71F83748}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{85F33C13-C27D-4D43-B6B7-62C224882845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85F33C13-C27D-4D43-B6B7-62C224882845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85F33C13-C27D-4D43-B6B7-62C224882845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85F33C13-C27D-4D43-B6B7-62C224882845}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC722577-A66B-419D-BBBB-1CEA4AB52103}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC722577-A66B-419D-BBBB-1CEA4AB52103}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC722577-A66B-419D-BBBB-1CEA4AB52103}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC722577-A66B-419D-BBBB-1CEA4AB52103}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E4E618-FABD-4D1D-A864-3BD9BFDD5156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4E4E618-FABD-4D1D-A864-3BD9BFDD5156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4E4E618-FABD-4D1D-A864-3BD9BFDD5156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4E4E618-FABD-4D1D-A864-3BD9BFDD5156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{393906F3-B3E1-49DB-AF73-65B64C2D5995}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{393906F3-B3E1-49DB-AF73-65B64C2D5995}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{393906F3-B3E1-49DB-AF73-65B64C2D5995}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{393906F3-B3E1-49DB-AF73-65B64C2D5995}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D2F1946-FED3-41C0-96FC-C72E71F83748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D2F1946-FED3-41C0-96FC-C72E71F83748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D2F1946-FED3-41C0-96FC-C72E71F83748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D2F1946-FED3-41C0-96FC-C72E71F83748}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{85F33C13-C27D-4D43-B6B7-62C224882845} = {BC5F87E9-E1FD-4B40-A17E-FF9C944B8C55}
+		{FC722577-A66B-419D-BBBB-1CEA4AB52103} = {87C466BC-49A3-4CDC-9420-6B109A76DB7F}
+		{D4E4E618-FABD-4D1D-A864-3BD9BFDD5156} = {87C466BC-49A3-4CDC-9420-6B109A76DB7F}
+		{393906F3-B3E1-49DB-AF73-65B64C2D5995} = {BC5F87E9-E1FD-4B40-A17E-FF9C944B8C55}
+		{5D2F1946-FED3-41C0-96FC-C72E71F83748} = {87C466BC-49A3-4CDC-9420-6B109A76DB7F}
+	EndGlobalSection
+EndGlobal

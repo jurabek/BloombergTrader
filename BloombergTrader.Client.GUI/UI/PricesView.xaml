@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="BloombergTrader.Client.GUI.UI.PricesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:BloombergTrader.Client.GUI.Converters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BloombergTrader.Client.GUI.UI"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="400" />
+            <RowDefinition Height="Auto" MaxHeight="200" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" MaxHeight="400">
+            <ItemsControl ItemsSource="{Binding PriceViewModel.Prices}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:PriceTileView />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+        <Grid Grid.Row="1">
+            <StackPanel>
+                <TextBlock Margin="10" FontSize="14">Selected symbols:</TextBlock>
+                <DataGrid Grid.Row="1"
+                          MaxHeight="200"
+                          Margin="0 5"
+                          CanUserAddRows="False"
+                          CanUserSortColumns="True"
+                          ItemsSource="{Binding SelectedSymbols}" />
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="2">
+
+            <StackPanel Margin="10"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center"
+                           FontSize="14"
+                           Text="Load prices from " />
+                <DatePicker Width="100"
+                            Margin="10"
+                            materialDesign:HintAssist.Hint="Start Date"
+                            SelectedDate="{Binding PriceViewModel.StartDate}" />
+                <TextBlock VerticalAlignment="Center" FontSize="14">to</TextBlock>
+                <DatePicker Width="100"
+                            Margin="10"
+                            materialDesign:HintAssist.Hint="End Date"
+                            SelectedDate="{Binding PriceViewModel.EndDate}" />
+                <TextBlock VerticalAlignment="Center" FontSize="14">for selected symbols</TextBlock>
+                <Button Margin="10 0" Command="{Binding PriceViewModel.LoadPrices}">Load</Button>
+            </StackPanel>
+            <StackPanel Margin="10"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                <TextBlock Margin="10 0"
+                           VerticalAlignment="Center"
+                           FontSize="14">
+                    Load prices real time.
+                </TextBlock>
+                <ToggleButton VerticalAlignment="Center"
+                              Content="Real time prices"
+                              Style="{StaticResource MaterialDesignSwitchToggleButton}" />
+            </StackPanel>
+        </Grid>
+    </Grid>
+
+</UserControl>

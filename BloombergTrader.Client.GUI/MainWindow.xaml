@@ -1,0 +1,46 @@
+﻿<controls:MetroWindow x:Class="BloombergTrader.Client.GUI.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:local="clr-namespace:BloombergTrader.Client.GUI"
+                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      Title=""
+                      Width="525"
+                      Height="350"
+                      WindowStartupLocation="CenterScreen"
+                      WindowState="Maximized"
+                      mc:Ignorable="d">
+    <controls:MetroWindow.RightWindowCommands>
+        <controls:WindowCommands>
+            <Button Name="SettingsButton" Click="SettingsButton_Click">
+                <TextBlock FontFamily="Segoe UI Symbol"
+                           FontSize="20"
+                           Text="" />
+            </Button>
+        </controls:WindowCommands>
+    </controls:MetroWindow.RightWindowCommands>
+    
+    <controls:MetroWindow.Flyouts>
+        <controls:FlyoutsControl x:Name="FlyoutsControl">
+            <controls:Flyout Position="Right" Header="Settings">
+                <Grid>
+                    <StackPanel Width="400" x:Name="uiPanel">
+                        <TextBox Style="{DynamicResource MetroTextBox}" 
+                             Text="{Binding Path=DataContext.Settings.ServerHost, RelativeSource={RelativeSource AncestorType=StackPanel, Mode=FindAncestor}}"
+                             controls:TextBoxHelper.Watermark="Server host" Margin="5" />
+
+                        <TextBox Margin="5" Style="{DynamicResource MetroTextBox}" 
+                             Text="{Binding Path=DataContext.Settings.ServerPort, RelativeSource={RelativeSource AncestorType=StackPanel, Mode=FindAncestor}}" 
+                             controls:TextBoxHelper.Watermark="Server port"/>
+                    </StackPanel>
+                </Grid>
+                
+            </controls:Flyout>
+        </controls:FlyoutsControl>
+    </controls:MetroWindow.Flyouts>
+
+
+
+</controls:MetroWindow>

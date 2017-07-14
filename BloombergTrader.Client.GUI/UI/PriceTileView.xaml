@@ -1,0 +1,272 @@
+﻿<UserControl x:Class="BloombergTrader.Client.GUI.UI.PriceTileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:BloombergTrader.Client.GUI.UI"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:model="clr-namespace:BloombergTrader.Client.Model;assembly=BloombergTrader.Client"
+             xmlns:vm="clr-namespace:BloombergTrader.Client.ViewModels;assembly=BloombergTrader.Client"
+             d:DesignHeight="150"
+             d:DesignWidth="328"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/BloombergTrader.Client.GUI;component/Styles/Brushes.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <SolidColorBrush x:Key="MouseOverBrush">#FF2F5078</SolidColorBrush>
+
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="Segoe UI" />
+                <Setter Property="FontWeight" Value="Regular" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Foreground" Value="Black" />
+                <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+            </Style>
+
+            <DataTemplate x:Key="PriceDataTemplate" DataType="vm:IOneWayPriceViewModel">
+                <Button Command="{Binding ExecuteCommand}" Cursor="Hand">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter Content="{TemplateBinding Content}" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource MouseOverBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#FF345C8B" />
+                                </Trigger>
+                                <DataTrigger Binding="{Binding IsExecuting}" Value="True">
+                                    <Setter Property="Background" Value="{StaticResource MouseOverBrush}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <UserControl>
+                        <UserControl.Template>
+                            <ControlTemplate TargetType="UserControl">
+                                <StackPanel Margin="0,5,0,0">
+                                    <TextBlock HorizontalAlignment="Center"
+                                               FontSize="16"
+                                               Foreground="{StaticResource SecondaryForeground}"
+                                               Text="{Binding Direction}" />
+                                    <StackPanel Margin="0,-8,0,0"
+                                                HorizontalAlignment="Center"
+                                                Orientation="Horizontal">
+                                        <TextBlock FontSize="18"
+                                                   Foreground="{StaticResource SecondaryForeground}"
+                                                   Style="{StaticResource {x:Type TextBlock}}"
+                                                   Text="{Binding BigFigures}" />
+                                        <TextBlock x:Name="PipsText"
+                                                   Margin="5,0"
+                                                   FontSize="38"
+                                                   FontWeight="Light"
+                                                   Foreground="{StaticResource PrimaryForeground}"
+                                                   Text="{Binding Pips}" />
+                                        <TextBlock x:Name="TenthOfPipText"
+                                                   FontSize="18"
+                                                   Foreground="{StaticResource SecondaryForeground}"
+                                                   Style="{StaticResource {x:Type TextBlock}}"
+                                                   Text="{Binding TenthOfPip}" />
+                                    </StackPanel>
+                                </StackPanel>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter TargetName="PipsText" Property="Foreground" Value="{StaticResource SecondaryForeground}" />
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </UserControl.Template>
+                    </UserControl>
+                </Button>
+            </DataTemplate>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Template>
+        <ControlTemplate TargetType="UserControl">
+            <Border x:Name="RootBorder"
+                    Background="{StaticResource TileBackgroundBrush}"
+                    Padding="15,12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <DockPanel Grid.Row="0" LastChildFill="False">
+                        <TextBlock DockPanel.Dock="Left"
+                                   FontSize="14"
+                                   Foreground="{StaticResource SecondaryForeground}"
+                                   Text="{Binding Symbol,
+                                                  Mode=OneWay}" />
+
+                        <TextBlock x:Name="ExecutingStatusTextBlock"
+                                   DockPanel.Dock="Right"
+                                   FontSize="18"
+                                   Foreground="{StaticResource PrimaryForeground}"
+                                   Text="EXECUTING"
+                                   Visibility="Collapsed" />
+                    </DockPanel>
+
+                    <Grid x:Name="PriceButtonsPanel" Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <ContentControl x:Name="BidContentControl"
+                                        Grid.Column="0"
+                                        Margin="0,0,5,0"
+                                        Content="{Binding Bid}"
+                                        ContentTemplate="{StaticResource PriceDataTemplate}" />
+
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <Path x:Name="UpMovementIcon"
+                                  Width="12"
+                                  Height="12"
+                                  Data="M6,0L12,12 0,12z"
+                                  Fill="#FF3FCF1E"
+                                  Visibility="Hidden" />
+                            <TextBlock x:Name="SpreadTextBlock"
+                                       Margin="3,5"
+                                       FontSize="16"
+                                       Foreground="{StaticResource PrimaryForeground}"
+                                       Text="{Binding Spread}" />
+                            <Path x:Name="DownMovementIcon"
+                                  Width="12"
+                                  Height="12"
+                                  Data="M6,12L0,0 12,0z"
+                                  Fill="#FFCC3350"
+                                  Visibility="Hidden" />
+                        </StackPanel>
+
+                        <ContentControl x:Name="AskContentControl"
+                                        Grid.Column="2"
+                                        Margin="5,0,0,0"
+                                        Content="{Binding Ask}"
+                                        ContentTemplate="{StaticResource PriceDataTemplate}" />
+                    </Grid>
+
+                    <TextBlock x:Name="StaleTextBlock"
+                               Grid.Row="1"
+                               VerticalAlignment="Top"
+                               FontSize="16"
+                               Foreground="{StaticResource PrimaryForeground}"
+                               Text="Pricing currently unavailable"
+                               Visibility="Collapsed" />
+
+                    <TextBlock x:Name="SubscribingTextBlock"
+                               Grid.Row="1"
+                               VerticalAlignment="Top"
+                               FontSize="16"
+                               Foreground="{StaticResource SecondaryForeground}"
+                               Text="Subscribing..."
+                               Visibility="Collapsed" />
+
+                    <DockPanel x:Name="NotionalPanel" Grid.Row="2">
+                        <TextBlock x:Name="SpotDateTextBlock"
+                                   DockPanel.Dock="Right"
+                                   FontSize="16"
+                                   Foreground="{StaticResource SecondaryForeground}"
+                                   Text="{Binding SpotDate}" />
+
+                        <UserControl>
+                            <UserControl.Template>
+                                <ControlTemplate TargetType="UserControl">
+                                    <Border x:Name="Border"
+                                            Width="146"
+                                            HorizontalAlignment="Left"
+                                            BorderThickness="0,0,0,1">
+                                        <DockPanel>
+                                            <TextBlock x:Name="DealtCcyTextBlock"
+                                                       DockPanel.Dock="Left"
+                                                       FontSize="16"
+                                                       Foreground="{StaticResource SecondaryForeground}"
+                                                       Text="{Binding DealtCurrency}" />
+
+                                            <TextBox x:Name="NotionalTextBox"
+                                                     Margin="5,0"
+                                                     VerticalContentAlignment="Center"
+                                                     Background="Black"
+                                                     FontSize="16"
+                                                     Foreground="{StaticResource SecondaryForeground}"
+                                                     Text="{Binding Notional,
+                                                                    Mode=TwoWay}"
+                                                     TextAlignment="Left">
+                                                <TextBox.Template>
+                                                    <ControlTemplate TargetType="TextBox">
+                                                        <ScrollViewer x:Name="PART_ContentHost"
+                                                                      Focusable="false"
+                                                                      HorizontalScrollBarVisibility="Hidden"
+                                                                      VerticalScrollBarVisibility="Hidden" />
+                                                    </ControlTemplate>
+                                                </TextBox.Template>
+                                            </TextBox>
+                                        </DockPanel>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource MouseOverBrush}" />
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PrimaryForeground}" />
+                                            <Setter TargetName="DealtCcyTextBlock" Property="Foreground" Value="{StaticResource PrimaryForeground}" />
+                                            <Setter TargetName="NotionalTextBox" Property="Foreground" Value="{StaticResource PrimaryForeground}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </UserControl.Template>
+                        </UserControl>
+
+                    </DockPanel>
+                </Grid>
+            </Border>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter TargetName="RootBorder" Property="Background" Value="#FF294464" />
+                    <!--<Setter TargetName="SpotDateTextBlock" Property="Visibility" Value="Visible" />-->
+                </Trigger>
+                <DataTrigger Binding="{Binding Bid.IsExecuting}" Value="True">
+                    <Setter TargetName="SpreadTextBlock" Property="Foreground" Value="{StaticResource SecondaryForeground}" />
+                    <Setter TargetName="ExecutingStatusTextBlock" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="BidContentControl" Property="IsEnabled" Value="False" />
+                    <Setter TargetName="AskContentControl" Property="IsEnabled" Value="False" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Ask.IsExecuting}" Value="True">
+                    <Setter TargetName="SpreadTextBlock" Property="Foreground" Value="{StaticResource SecondaryForeground}" />
+                    <Setter TargetName="ExecutingStatusTextBlock" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="BidContentControl" Property="IsEnabled" Value="False" />
+                    <Setter TargetName="AskContentControl" Property="IsEnabled" Value="False" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsStale}" Value="True">
+                    <Setter TargetName="PriceButtonsPanel" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="NotionalPanel" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="StaleTextBlock" Property="Visibility" Value="Visible" />
+                    <Setter TargetName="RootBorder" Property="Background" Value="{StaticResource ErrorBackgroundBrush}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsSubscribing}" Value="True">
+                    <Setter TargetName="PriceButtonsPanel" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="NotionalPanel" Property="Visibility" Value="Hidden" />
+                    <Setter TargetName="SubscribingTextBlock" Property="Visibility" Value="Visible" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Movement}" Value="{x:Static model:PriceMovement.Up}">
+                    <Setter TargetName="UpMovementIcon" Property="Visibility" Value="Visible" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Movement}" Value="{x:Static model:PriceMovement.Down}">
+                    <Setter TargetName="DownMovementIcon" Property="Visibility" Value="Visible" />
+                </DataTrigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+    </UserControl.Template>
+</UserControl>
